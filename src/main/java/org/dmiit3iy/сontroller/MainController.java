@@ -4,12 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import org.dmiit3iy.App;
 import org.dmiit3iy.model.User;
 import org.dmiit3iy.model.UserFile;
@@ -39,8 +37,8 @@ public class MainController {
     public void initialize() {
         userFileRepository = new UserFileRepository(login, password);
         try {
-           List<UserFile> list= userFileRepository.get(Long.parseLong(userId));
-           ObservableList<UserFile> data = FXCollections.observableArrayList(list);
+            List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
+            ObservableList<UserFile> data = FXCollections.observableArrayList(list);
 
             TableColumn<UserFile, String> fileNameCol = new TableColumn<>("File name");
             fileNameCol.setCellValueFactory(new PropertyValueFactory<>("filename"));
@@ -52,8 +50,8 @@ public class MainController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
+
 
     @FXML
     public void exitButton(ActionEvent actionEvent) {
@@ -84,15 +82,38 @@ public class MainController {
     public void sendFileButton(ActionEvent actionEvent) {
         try {
             fileUploadRepository = new FileUploadRepository(login, password);
-            fileUploadRepository.uploadFile(Long.parseLong(userId), pathFile);
-            App.showMessage("Success", "File uploaded successfully", Alert.AlertType.INFORMATION);
-            List<UserFile> list= userFileRepository.get(Long.parseLong(userId));
-            ObservableList<UserFile> data = FXCollections.observableArrayList(list);
-            tableViewFiles.setItems(data);
+            if (pathFile != null) {
+                fileUploadRepository.uploadFile(Long.parseLong(userId), pathFile);
+                App.showMessage("Success", "File uploaded successfully", Alert.AlertType.INFORMATION);
+                List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
+                ObservableList<UserFile> data = FXCollections.observableArrayList(list);
+                tableViewFiles.setItems(data);
+            } else {
+                App.showMessage("Warning", "Select the file before sending", Alert.AlertType.WARNING);
+            }
         } catch (IOException e) {
             App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
         } finally {
             pathTextField.clear();
         }
+    }
+
+    public void downloadButton(ActionEvent actionEvent) {
+        TableView.TableViewSelectionModel<UserFile> selectionModel = tableViewFiles.getSelectionModel();
+        if (selectionModel.getSelectedItem() != null) {
+            UserFile userFile = selectionModel.getSelectedItem();
+            try {
+                fileUploadRepository = new FileUploadRepository(login, password);
+                fileUploadRepository.downloadFile(userFile.getFilename(), Long.parseLong(userId), userFile.getVersion());
+                App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
+                        "C:\\client\\downloaded", Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
+            }
+        } else {
+            App.showMessage("Warning", "Select the file to download it", Alert.AlertType.WARNING);
+        }
+
+
     }
 }

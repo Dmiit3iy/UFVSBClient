@@ -41,38 +41,25 @@ public class FileUploadRepository {
         this.service = retrofit.create(FileUploadService.class);
     }
     public void uploadFile(long id, File file) throws IOException {
-        // create upload service client
-        // create RequestBody instance from file
-        RequestBody requestFile =
-                RequestBody.create(
-                        MediaType.parse(Files.probeContentType(file.toPath())),
-                        file
-                );
+        RequestBody requestFile =RequestBody.create(MediaType.parse(Files.probeContentType(file.toPath())),file);
 
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("document", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("document", file.getName(), requestFile);
 
-//        RequestBody id =
-//                RequestBody.create(
-//                        MultipartBody.FORM, String.valueOf(id));
-
-        // finally, execute the request
         Call<ResponseResult<String>> call = service.upload(id,body);
         ResponseResult<String> res = call.execute().body();
-      //  System.out.println(res.getData());
+
     }
 
-//    public void downloadFile(String filename) throws IOException {
-//        Call<ResponseBody> call = this.service.showFile(filename);
-//        ResponseBody body = call.execute().body();
-//        String client = "C:\\client\\downloaded";
-//        File file = new File(client);
-//        file.mkdirs();
-//        try (FileOutputStream outputStream = new FileOutputStream(new File(file, filename))) {
-//            outputStream.write(body.bytes());
-//        }
-//    }
+    public void downloadFile(String filename, long id, long version) throws IOException {
+        Call<ResponseBody> call = this.service.showFile(filename, id, version);
+        ResponseBody body = call.execute().body();
+        String client = "C:\\client\\downloaded";
+        File file = new File(client);
+        file.mkdirs();
+        try (FileOutputStream outputStream = new FileOutputStream(new File(file, filename))) {
+            outputStream.write(body.bytes());
+        }
+    }
 
 
 }

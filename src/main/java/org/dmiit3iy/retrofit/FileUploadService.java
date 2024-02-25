@@ -13,6 +13,6 @@ public interface FileUploadService {
     @POST(".")
     Call<ResponseResult<String>> upload(  @Part("id") long id,@Part MultipartBody.Part file);
 
-//    @GET("mime/{filename}")
-//    Call<ResponseBody> showFile(@Path("filename") String filename);
+    @GET("mime/{filename}")
+    Call<ResponseBody> showFile(@Path("filename")String filename, @Query("id") long id, @Query("version") long version);
 }
