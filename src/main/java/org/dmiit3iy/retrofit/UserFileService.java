@@ -11,8 +11,9 @@ import java.util.List;
 
 public interface UserFileService {
 
-    @GET("{id}")
-    Call<ResponseResult<List<UserFile>>> get(@Path("id") long id);
+    @GET(".")
+    Call<ResponseResult<List<UserFile>>> get();
 
-
+//    @GET("{id}")
+//    Call<ResponseResult<List<UserFile>>> get(@Path("id") long id);
 }

@@ -37,7 +37,8 @@ public class MainController {
     public void initialize() {
         userFileRepository = new UserFileRepository(login, password);
         try {
-            List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
+            List<UserFile> list = userFileRepository.get();
+           // List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
             ObservableList<UserFile> data = FXCollections.observableArrayList(list);
 
             TableColumn<UserFile, String> fileNameCol = new TableColumn<>("File name");
@@ -85,7 +86,8 @@ public class MainController {
             if (pathFile != null) {
                 fileUploadRepository.uploadFile(Long.parseLong(userId), pathFile);
                 App.showMessage("Success", "File uploaded successfully", Alert.AlertType.INFORMATION);
-                List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
+                List<UserFile> list = userFileRepository.get();
+                //List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
                 ObservableList<UserFile> data = FXCollections.observableArrayList(list);
                 tableViewFiles.setItems(data);
             } else {

@@ -50,10 +50,13 @@ public class UserFileRepository {
     }
 
 
-    public List<UserFile> get(long id) throws IOException {
-        Response<ResponseResult<List<UserFile>>> execute = service.get(id).execute();
+    public List<UserFile> get() throws IOException {
+        Response<ResponseResult<List<UserFile>>> execute = service.get().execute();
         return getData(execute);
     }
 
-
+//    public List<UserFile> get(long id) throws IOException {
+//        Response<ResponseResult<List<UserFile>>> execute = service.get(id).execute();
+//        return getData(execute);
+//    }
 }
