@@ -1,0 +1,1 @@
+POST http://localhost:8080/user?fio=aaa&login=aaa&password=111
