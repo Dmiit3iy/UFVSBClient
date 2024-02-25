@@ -12,7 +12,7 @@ import org.dmiit3iy.retrofit.UserRepository;
 import java.io.IOException;
 
 public class RegistrationController {
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @FXML
     public PasswordField passwordField;
     @FXML

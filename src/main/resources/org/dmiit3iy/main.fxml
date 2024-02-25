@@ -9,5 +9,6 @@
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#broseFileButton" text="Brose file" />
       <TextField fx:id="pathTextField" layoutX="14.0" layoutY="57.0" prefHeight="26.0" prefWidth="487.0" />
       <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#sendFileButton" prefHeight="26.0" prefWidth="65.0" text="Send file" />
+      <TableView fx:id="tableViewFiles" layoutX="14.0" layoutY="138.0" prefHeight="200.0" prefWidth="487.0" />
    </children>
 </AnchorPane>
