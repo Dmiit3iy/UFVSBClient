@@ -38,7 +38,7 @@ public class MainController {
         userFileRepository = new UserFileRepository(login, password);
         try {
             List<UserFile> list = userFileRepository.get();
-           // List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
+            // List<UserFile> list = userFileRepository.get(Long.parseLong(userId));
             ObservableList<UserFile> data = FXCollections.observableArrayList(list);
 
             TableColumn<UserFile, String> fileNameCol = new TableColumn<>("File name");
@@ -116,6 +116,18 @@ public class MainController {
             App.showMessage("Warning", "Select the file to download it", Alert.AlertType.WARNING);
         }
 
+
+    }
+
+    public void downloadZipButton(ActionEvent actionEvent) {
+        try {
+            fileUploadRepository = new FileUploadRepository(login, password);
+            fileUploadRepository.downloadZip(login);
+            App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
+                    "C:\\client\\downloaded", Alert.AlertType.INFORMATION);
+        } catch (IOException e) {
+            App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
+        }
 
     }
 }

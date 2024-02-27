@@ -15,4 +15,7 @@ public interface FileUploadService {
 
     @GET("mime/{filename}")
     Call<ResponseBody> showFile(@Path("filename")String filename, @Query("id") long id, @Query("version") long version);
+
+    @GET("zip")
+    Call<ResponseBody> getZip();
 }

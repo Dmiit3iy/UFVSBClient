@@ -62,4 +62,14 @@ public class FileUploadRepository {
     }
 
 
+    public void downloadZip(String s) throws IOException {
+        Call<ResponseBody> call = this.service.getZip();
+        ResponseBody body = call.execute().body();
+        String client = "C:\\client\\downloaded";
+        File file = new File(client);
+        file.mkdirs();
+        try (FileOutputStream outputStream = new FileOutputStream(new File(file,s+".zip"))) {
+            outputStream.write(body.bytes());
+        }
+    }
 }
