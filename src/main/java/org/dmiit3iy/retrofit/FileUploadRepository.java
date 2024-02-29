@@ -72,4 +72,15 @@ public class FileUploadRepository {
             outputStream.write(body.bytes());
         }
     }
+
+    public void downLoadVersionsZip(String name) throws IOException {
+        Call<ResponseBody> call = this.service.getVersionsZip(name);
+        ResponseBody body = call.execute().body();
+        String client = "C:\\client\\downloaded";
+        File file = new File(client);
+        file.mkdirs();
+        try (FileOutputStream outputStream = new FileOutputStream(new File(file,name.substring(0,name.lastIndexOf("."))+".zip"))) {
+            outputStream.write(body.bytes());
+        }
+    }
 }

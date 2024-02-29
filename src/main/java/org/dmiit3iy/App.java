@@ -28,7 +28,7 @@ public class App extends Application {
         } else {
             fxmlLoader = new FXMLLoader(App.class.getResource("main.fxml"));
         }
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 750, 400);
         //stage.setTitle("Open New Forms Demo");
         stage.setScene(scene);
         stage.show();

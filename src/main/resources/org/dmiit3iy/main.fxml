@@ -3,14 +3,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="333.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dmiit3iy.сontroller.MainController">
+<AnchorPane prefHeight="200.0" prefWidth="290.0" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dmiit3iy.сontroller.MainController">
    <children>
-      <Button layoutX="519.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButton" text="Exit" />
+      <Button layoutX="589.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButton" text="Exit" styleClass="danger" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#broseFileButton" text="Brose file" />
       <TextField fx:id="pathTextField" layoutX="14.0" layoutY="57.0" prefHeight="26.0" prefWidth="487.0" />
       <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#sendFileButton" prefHeight="26.0" prefWidth="65.0" text="Send file" />
-      <TableView fx:id="tableViewFiles" layoutX="14.0" layoutY="138.0" prefHeight="200.0" prefWidth="487.0" />
-      <Button layoutX="14.0" layoutY="352.0" mnemonicParsing="false" onAction="#downloadButton" text="Download" />
-      <Button layoutX="382.0" layoutY="351.0" mnemonicParsing="false" onAction="#downloadZipButton" text="Download all in ZIP" />
+      <TableView fx:id="tableViewFiles" layoutX="14.0" layoutY="138.0" onMouseClicked="#onClick" prefHeight="200.0" prefWidth="487.0" />
+      <Button layoutX="11.0" layoutY="339.0" mnemonicParsing="false" onAction="#downloadButton" text="Download" />
+      <Button layoutX="382.0" layoutY="339.0" mnemonicParsing="false" onAction="#downloadZipButton" text="Download all in ZIP" />
+      <Button layoutX="513.0" layoutY="169.0" mnemonicParsing="false" onAction="#downloadVersionButton" text="Download all versions" />
+      <TextField fx:id="nameTextField" layoutX="513.0" layoutY="138.0" prefHeight="26.0" prefWidth="125.0" />
+      <Label layoutX="511.0" layoutY="105.0" text="File name" />
    </children>
 </AnchorPane>

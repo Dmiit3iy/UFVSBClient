@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.dmiit3iy.App;
@@ -24,6 +25,7 @@ public class MainController {
     public TextField pathTextField;
     @FXML
     public TableView tableViewFiles;
+    public TextField nameTextField;
     Preferences preferences = Preferences.userRoot().node("ufc");
 
     private FileUploadRepository fileUploadRepository;
@@ -48,10 +50,16 @@ public class MainController {
             versionCol.setCellValueFactory(new PropertyValueFactory<>("version"));
             tableViewFiles.setItems(data);
             tableViewFiles.getColumns().setAll(fileNameCol, versionCol);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
 
 
     @FXML
@@ -129,5 +137,26 @@ public class MainController {
             App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
         }
 
+    }
+
+    public void downloadVersionButton(ActionEvent actionEvent) {
+        try {
+            fileUploadRepository = new FileUploadRepository(login, password);
+            if (!nameTextField.getText().isEmpty()){
+            fileUploadRepository.downLoadVersionsZip(nameTextField.getText());
+            App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
+                    "C:\\client\\downloaded", Alert.AlertType.INFORMATION);}
+            else {
+                App.showMessage("Warning", "Enter the file name in the \"file name\" field", Alert.AlertType.INFORMATION);}
+
+        } catch (IOException e) {
+            App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
+        }
+    }
+
+    public void onClick(MouseEvent mouseEvent) {
+        TableView.TableViewSelectionModel<UserFile> selectionModel = tableViewFiles.getSelectionModel();
+        if (!selectionModel.isEmpty()){
+            nameTextField.setText(selectionModel.getSelectedItem().getFilename());}
     }
 }

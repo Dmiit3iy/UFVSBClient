@@ -18,4 +18,7 @@ public interface FileUploadService {
 
     @GET("zip")
     Call<ResponseBody> getZip();
+
+    @GET("zip/{filename}")
+    Call<ResponseBody> getVersionsZip(@Path("filename") String name);
 }
