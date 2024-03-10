@@ -50,10 +50,10 @@ public class FileUploadRepository {
 
     }
 
-    public void downloadFile(String filename, long id, long version) throws IOException {
+    public void downloadFile(String filename, long id, long version, String path) throws IOException {
         Call<ResponseBody> call = this.service.showFile(filename, id, version);
         ResponseBody body = call.execute().body();
-        String client = "C:\\client\\downloaded";
+        String client = path;
         File file = new File(client);
         file.mkdirs();
         try (FileOutputStream outputStream = new FileOutputStream(new File(file, filename))) {
@@ -62,10 +62,10 @@ public class FileUploadRepository {
     }
 
 
-    public void downloadZip(String s) throws IOException {
+    public void downloadZip(String s, String path) throws IOException {
         Call<ResponseBody> call = this.service.getZip();
         ResponseBody body = call.execute().body();
-        String client = "C:\\client\\downloaded";
+        String client = path;
         File file = new File(client);
         file.mkdirs();
         try (FileOutputStream outputStream = new FileOutputStream(new File(file,s+".zip"))) {
@@ -73,10 +73,10 @@ public class FileUploadRepository {
         }
     }
 
-    public void downLoadVersionsZip(String name) throws IOException {
+    public void downLoadVersionsZip(String name, String path) throws IOException {
         Call<ResponseBody> call = this.service.getVersionsZip(name);
         ResponseBody body = call.execute().body();
-        String client = "C:\\client\\downloaded";
+        String client = path;
         File file = new File(client);
         file.mkdirs();
         try (FileOutputStream outputStream = new FileOutputStream(new File(file,name.substring(0,name.lastIndexOf("."))+".zip"))) {

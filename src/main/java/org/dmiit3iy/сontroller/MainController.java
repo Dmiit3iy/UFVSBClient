@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.dmiit3iy.App;
@@ -56,10 +57,6 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
 
 
     @FXML
@@ -113,10 +110,11 @@ public class MainController {
         if (selectionModel.getSelectedItem() != null) {
             UserFile userFile = selectionModel.getSelectedItem();
             try {
+                String path = App.getPath();
                 fileUploadRepository = new FileUploadRepository(login, password);
-                fileUploadRepository.downloadFile(userFile.getFilename(), Long.parseLong(userId), userFile.getVersion());
-                App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
-                        "C:\\client\\downloaded", Alert.AlertType.INFORMATION);
+                fileUploadRepository.downloadFile(userFile.getFilename(), Long.parseLong(userId), userFile.getVersion(), path);
+                App.showMessage("Success", "The file has been successfully uploaded to the directory: " +
+                        path, Alert.AlertType.INFORMATION);
             } catch (IOException e) {
                 App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
             }
@@ -129,10 +127,11 @@ public class MainController {
 
     public void downloadZipButton(ActionEvent actionEvent) {
         try {
+            String path = App.getPath();
             fileUploadRepository = new FileUploadRepository(login, password);
-            fileUploadRepository.downloadZip(login);
-            App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
-                    "C:\\client\\downloaded", Alert.AlertType.INFORMATION);
+            fileUploadRepository.downloadZip(login,path);
+            App.showMessage("Success", "The file has been successfully uploaded to the directory: " +
+                    path, Alert.AlertType.INFORMATION);
         } catch (IOException e) {
             App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
         }
@@ -141,13 +140,15 @@ public class MainController {
 
     public void downloadVersionButton(ActionEvent actionEvent) {
         try {
+            String path = App.getPath();
             fileUploadRepository = new FileUploadRepository(login, password);
-            if (!nameTextField.getText().isEmpty()){
-            fileUploadRepository.downLoadVersionsZip(nameTextField.getText());
-            App.showMessage("Success", "The file has been successfully uploaded to the directory:" +
-                    "C:\\client\\downloaded", Alert.AlertType.INFORMATION);}
-            else {
-                App.showMessage("Warning", "Enter the file name in the \"file name\" field", Alert.AlertType.INFORMATION);}
+            if (!nameTextField.getText().isEmpty()) {
+                fileUploadRepository.downLoadVersionsZip(nameTextField.getText(),path);
+                App.showMessage("Success", "The file has been successfully uploaded to the directory: " +
+                        path, Alert.AlertType.INFORMATION);
+            } else {
+                App.showMessage("Warning", "Enter the file name in the \"file name\" field", Alert.AlertType.INFORMATION);
+            }
 
         } catch (IOException e) {
             App.showMessage("Warning", e.getMessage(), Alert.AlertType.WARNING);
@@ -156,7 +157,8 @@ public class MainController {
 
     public void onClick(MouseEvent mouseEvent) {
         TableView.TableViewSelectionModel<UserFile> selectionModel = tableViewFiles.getSelectionModel();
-        if (!selectionModel.isEmpty()){
-            nameTextField.setText(selectionModel.getSelectedItem().getFilename());}
+        if (!selectionModel.isEmpty()) {
+            nameTextField.setText(selectionModel.getSelectedItem().getFilename());
+        }
     }
 }

@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.dmiit3iy.сontroller.ControllerData;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
@@ -23,7 +25,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader;
-        if (preferences.getLong("userID",-1)==-1) {
+        if (preferences.getLong("userID", -1) == -1) {
             fxmlLoader = new FXMLLoader(App.class.getResource("authorization.fxml"));
         } else {
             fxmlLoader = new FXMLLoader(App.class.getResource("main.fxml"));
@@ -67,7 +69,7 @@ public class App extends Application {
         return stage;
     }
 
-    public static void closeWindow(Event event){
+    public static void closeWindow(Event event) {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -79,5 +81,15 @@ public class App extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static String getPath() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+        if (selectedDirectory == null) {
+            showMessage("warning","choose a directory", Alert.AlertType.ERROR);
+            return null;
+        }
+        return selectedDirectory.getPath();
     }
 }
